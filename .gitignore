@@ -1,0 +1,9 @@
+node_modules
+.next
+data/db.json
+data/*.tmp
+next-env.d.ts
+tsconfig.tsbuildinfo
+.env*
+.vercel
+.DS_Store
