@@ -1,6 +1,6 @@
 // Synthetic, deterministic demo data. All locations and people are fictional.
 import { emptySpecial, varianceNeedsReason, WASTE_KG_PER_PORTION } from "./calculations";
-import { addDays, nextWorkingDay, parseDate, previousWorkingDay, toDateStr, workingDaysBefore } from "./dates";
+import { addDays, nextWorkingDay, parseDate, wallClock, previousWorkingDay, toDateStr, workingDaysBefore } from "./dates";
 import type {
   ChangeLog,
   Database,
@@ -108,7 +108,7 @@ function specials(loc: Location, diners: number, rnd: () => number): SpecialCoun
   return s;
 }
 
-export function createSeed(realNow = new Date()): Database {
+export function createSeed(realNow = wallClock()): Database {
   const rnd = mulberry32(20260927);
   const gauss = () => (rnd() + rnd() + rnd() - 1.5) * 1.15;
 

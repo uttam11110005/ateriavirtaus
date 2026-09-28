@@ -4,6 +4,7 @@ import {
   nextWorkingDay,
   previousWorkingDay,
   toStamp,
+  wallClock,
 } from "./dates";
 import type {
   ChangeLog,
@@ -32,7 +33,7 @@ export function specialTotal(s: SpecialCounts): number {
 }
 
 export function getNow(settings: Settings): string {
-  return settings.clockMode === "real" ? toStamp(new Date()) : settings.simulatedNow;
+  return settings.clockMode === "real" ? toStamp(wallClock()) : settings.simulatedNow;
 }
 
 /** The next service day after "now" — the day the kitchen is planning for. */

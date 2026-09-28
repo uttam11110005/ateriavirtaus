@@ -14,7 +14,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { apiPost, ClientApiError, useApi, useSession, useToast } from "@/components/providers";
 import { Button, ErrorState, Field, inputCls, PageSkeleton, selectCls, StatusBadge, Stepper, cx } from "@/components/ui";
-import { addDays, fmtDate, fmtStamp, fmtTime, parseDate } from "@/lib/dates";
+import { addDays, fmtDate, fmtStamp, fmtTime, parseDate, wallClock } from "@/lib/dates";
 import { DIET_LABEL } from "@/lib/labels";
 import type {
   ChangeLog,
@@ -186,7 +186,7 @@ function DayStrip({
  */
 function useTicking(now: string, real: boolean) {
   const anchor = useRef({ server: parseDate(now).getTime(), local: Date.now() });
-  const read = () => (real ? Date.now() : anchor.current.server + (Date.now() - anchor.current.local));
+  const read = () => (real ? wallClock().getTime() : anchor.current.server + (Date.now() - anchor.current.local));
   const [t, setT] = useState(read);
   useEffect(() => {
     anchor.current = { server: parseDate(now).getTime(), local: Date.now() };

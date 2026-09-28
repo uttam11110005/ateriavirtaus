@@ -3,6 +3,27 @@
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+/** Servica operates in Finland: deadlines and "now" are Finnish wall-clock time, whatever the server's zone. */
+export const APP_TIME_ZONE = "Europe/Helsinki";
+
+const wallFormat = new Intl.DateTimeFormat("en-GB", {
+  timeZone: APP_TIME_ZONE,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23",
+});
+
+/** The current Finnish wall-clock time as a naive local Date, comparable with parseDate(). */
+export function wallClock(at: Date = new Date()): Date {
+  const parts = wallFormat.formatToParts(at);
+  const get = (t: string) => Number(parts.find((p) => p.type === t)!.value);
+  return new Date(get("year"), get("month") - 1, get("day"), get("hour"), get("minute"), get("second"));
+}
+
 export function toDateStr(d: Date): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
